@@ -34,7 +34,7 @@ app.get('/', function (rec, res, next) {
   res.render('index');
 })
 
-models.db.sync({force: true})
+models.db.sync({})
   .then(() => {
     //starting the server after the db has synced
     app.listen(3030, function () {

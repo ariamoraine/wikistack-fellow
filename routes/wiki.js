@@ -8,6 +8,22 @@ wikiRouter.get('/', function(req, res, next) {
   res.redirect('/');
 });
 
+wikiRouter.get('/add', function(req, res, next) {
+  res.render('addPage');
+});
+
+wikiRouter.get('/:pageName', (req, res, next) => {
+  Page.findOne({
+    where: {
+      urlTitle: req.params.pageName
+    }
+  })
+  .then(page => {
+    res.render('wikipage');
+  })
+  .catch(next);
+})
+
 wikiRouter.post('/', function(req, res, next) {
   console.log(req.body);
   var page = Page.create({
@@ -18,8 +34,6 @@ wikiRouter.post('/', function(req, res, next) {
   .catch(err => console.error(err));
 });
 
-wikiRouter.get('/add', function(req, res, next) {
-  res.render('addPage');
-});
+
 
 module.exports = wikiRouter;
