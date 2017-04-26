@@ -19,7 +19,9 @@ wikiRouter.get('/:pageName', (req, res, next) => {
     }
   })
   .then(page => {
-    res.render('wikipage');
+    res.render('wikipage', {
+      page: page
+    });
   })
   .catch(next);
 })
