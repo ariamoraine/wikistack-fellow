@@ -32,7 +32,7 @@ wikiRouter.post('/', function(req, res, next) {
     title: req.body.title,
     content: req.body.content
   })
-  .then((newPage) => res.send(newPage))
+  .then((newPage) => res.redirect(newPage.route))
   .catch(err => console.error(err));
 });
 

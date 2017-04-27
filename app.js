@@ -7,6 +7,7 @@ const path = require('path');
 
 //Database
 const models = require('./models');
+const Page = models.Page;
 
 //Subrouters
 const wikiRouter = require('./routes/wiki');
@@ -31,7 +32,12 @@ app.use('/user', userRouter);
 
 //base app get route
 app.get('/', function (rec, res, next) {
-  res.render('index');
+  Page.findAll({})
+  .then(allPages => {
+    res.render('index', {
+      pages: allPages
+    });
+  })
 })
 
 models.db.sync({})
