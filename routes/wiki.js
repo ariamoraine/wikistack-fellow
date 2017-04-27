@@ -19,6 +19,7 @@ wikiRouter.get('/:pageName', (req, res, next) => {
     }
   })
   .then(page => {
+    console.log(page);
     res.render('wikipage', {
       page: page
     });
@@ -27,12 +28,25 @@ wikiRouter.get('/:pageName', (req, res, next) => {
 })
 
 wikiRouter.post('/', function(req, res, next) {
-  console.log(req.body);
-  var page = Page.create({
-    title: req.body.title,
-    content: req.body.content
+  User.findOrCreate({
+    where: {
+      name: req.body.name,
+      email: req.body.email
+    }
   })
-  .then((newPage) => res.redirect(newPage.route))
+  .then((values) => {
+    var user = values[0];
+    Page.create({
+      title: req.body.title,
+      content: req.body.content,
+    })
+    .then((newPage) => {
+      return newPage.setAuthor(user);
+    })
+    .then((newPage) => {
+      res.redirect(newPage.route)
+    })
+  })
   .catch(err => console.error(err));
 });
 
