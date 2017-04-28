@@ -20,9 +20,12 @@ userRouter.get('/:id', function (req, res, next) {
     Page.findAll({where: {authorId: req.params.id}})
   ])
   .then(results => {
-    res.render('singleUser', {user: results[0], pages: results[1]});
+    //using es6 destructuring here. Since results is an array we use square brackets in
+    //the declaration
+    const [user, pages] = results;
+    res.render('singleUser', {user: user, pages: pages});
   })
   .catch(next);
-})
+});
 
 module.exports = userRouter;

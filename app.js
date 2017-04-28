@@ -26,6 +26,7 @@ app.use(bodyParser.json());
 
 //serving up files from public folder
 app.use(express.static(path.join(__dirname, './public')));
+// app.use(express.static(__dirname +'./public'));
 
 app.use('/wiki', wikiRouter);
 app.use('/user', userRouter);
